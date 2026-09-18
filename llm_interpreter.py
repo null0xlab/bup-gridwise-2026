@@ -273,13 +273,12 @@ Operator Notes:
             if resp.status_code == 200:
                 content = resp.json()["choices"][0]["message"]["content"]
                 # Parse JSON array from content
-                m = re.search(r"\[\s*\{.*\}\s*\]", content, re.DOTALL)
+                m = re.search(r"\[\s*\{.*\}\s*\]", content or "", re.DOTALL)
                 if m:
                     parsed = json.loads(m.group(0))
                     if isinstance(parsed, list) and len(parsed) > 0:
                         return parsed
-                else:
-                    logger.warning("LLM response did not contain a JSON array; using fallback interpreter.")
+                logger.warning("LLM response did not contain a JSON array; using fallback interpreter.")
             else:
                 logger.warning("LLM request returned HTTP %s; using fallback interpreter.", resp.status_code)
         except Exception as e:

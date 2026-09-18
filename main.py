@@ -40,10 +40,11 @@ async def root():
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     """Returns HTTP 400 for malformed or structurally invalid requests."""
-    logger.warning(f"Request validation error: {exc.errors()}")
+    error_locations = [".".join(str(part) for part in error["loc"]) for error in exc.errors()]
+    logger.warning("Request validation failed at: %s", ", ".join(error_locations))
     return JSONResponse(
         status_code=status.HTTP_400_BAD_REQUEST,
-        content={"error": "Malformed JSON or structurally invalid request", "details": str(exc)}
+        content={"error": "Malformed JSON or structurally invalid request"}
     )
 
 

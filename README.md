@@ -83,7 +83,7 @@ The service recognizes and processes the 6 canonical directive types:
 | Variable | Description | Default Value | Required? |
 | :--- | :--- | :--- | :--- |
 | `OPENROUTER_API_KEY` | API key for OpenRouter LLM gateway | `""` | Yes (for live LLM) |
-| `LLM_MODEL` | Target language model | `google/gemini-2.5-flash` | No |
+| `LLM_MODEL` | Target language model | `inclusionai/ling-3.0-flash-sante:free` | No |
 | `LLM_BASE_URL` | OpenRouter OpenAI-compatible endpoint | `https://openrouter.ai/api/v1` | No |
 | `HOST` | Server bind interface | `0.0.0.0` | No |
 | `PORT` | Server listening port | `8000` | No |
@@ -101,8 +101,8 @@ A template is provided in `.env.example`.
 ### Installation
 ```bash
 # 1. Clone the repository
-git clone <repository-url>
-cd gridwise
+git clone https://github.com/null0xlab/bup-gridwise-2026.git
+cd bup-gridwise-2026
 
 # 2. Create and activate a virtual environment
 python -m venv venv
@@ -115,7 +115,10 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # 4. Configure environment variables
+# Linux / macOS:
 cp .env.example .env
+# Windows PowerShell:
+Copy-Item .env.example .env
 # Edit .env and paste your OPENROUTER_API_KEY
 ```
 
@@ -319,6 +322,10 @@ python test_runner.py https://<your-tunnel-subdomain>.trycloudflare.com
 ```bash
 docker build -t gridwise:latest .
 ```
+
+The GitHub Actions workflow also publishes a registry fallback image on each
+push to `main`. Use the immutable commit tag shown in the workflow run, or
+the corresponding digest, for evaluation.
 
 ### Run Container:
 ```bash
