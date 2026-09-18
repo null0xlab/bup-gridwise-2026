@@ -144,7 +144,20 @@ curl -X GET http://localhost:8000/health
 }
 ```
 
-### 2. Energy Optimization Endpoint
+### 2. Service Discovery
+**Endpoint:** `GET /`
+
+Returns links to the service health and optimization endpoints:
+```json
+{
+  "service": "GridWise",
+  "status": "ok",
+  "health": "/health",
+  "optimize": "/optimize-energy"
+}
+```
+
+### 3. Energy Optimization Endpoint
 **Endpoint:** `POST /optimize-energy`
 
 **cURL:**

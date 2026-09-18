@@ -27,6 +27,7 @@ htmlcov/
 *.log
 tmp/
 temp/
+MEMORY.md
 
 # IDE & OS files
 .vscode/

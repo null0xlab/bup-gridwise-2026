@@ -64,7 +64,7 @@ async def health_check():
 
 
 @app.post("/optimize-energy", response_model=OptimizeEnergyResponse, tags=["Optimization"])
-async def optimize_energy(req: OptimizeEnergyRequest):
+def optimize_energy(req: OptimizeEnergyRequest):
     """
     Main LLM interpretation + 24-hour campus energy scheduling endpoint.
     1. Interprets natural-language operator notes via LLM.

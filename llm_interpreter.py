@@ -1,8 +1,12 @@
 import json
+import logging
 import re
 from typing import List, Dict, Any
 import requests
 from config import OPENROUTER_API_KEY, LLM_BASE_URL, LLM_MODEL
+
+
+logger = logging.getLogger("gridwise.llm")
 
 
 SYSTEM_PROMPT = """You are an expert energy management AI assistant for the BUP Smart Campus Energy System.
@@ -275,11 +279,11 @@ Operator Notes:
                     if isinstance(parsed, list) and len(parsed) > 0:
                         return parsed
                 else:
-                    print(f"[LLM ERROR] Regex failed to find JSON array in response: {content}")
+                    logger.warning("LLM response did not contain a JSON array; using fallback interpreter.")
             else:
-                print(f"[LLM ERROR] Status code {resp.status_code}: {resp.text}")
+                logger.warning("LLM request returned HTTP %s; using fallback interpreter.", resp.status_code)
         except Exception as e:
-            print(f"[LLM EXCEPTION] {e}")
+            logger.warning("LLM request failed; using fallback interpreter: %s", e)
 
     # Resilient fallback
     return fallback_rule_based_interpretation(operator_notes, battery_data)
