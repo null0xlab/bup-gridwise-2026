@@ -26,6 +26,17 @@ app = FastAPI(
 )
 
 
+@app.get("/", tags=["Health"])
+async def root():
+    """Service discovery endpoint for browsers and live demos."""
+    return {
+        "service": "GridWise",
+        "status": "ok",
+        "health": "/health",
+        "optimize": "/optimize-energy"
+    }
+
+
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request: Request, exc: RequestValidationError):
     """Returns HTTP 400 for malformed or structurally invalid requests."""
